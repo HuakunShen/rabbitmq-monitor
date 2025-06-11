@@ -2,6 +2,7 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { io, type Socket } from 'socket.io-client';
 	import { Inspect } from 'svelte-inspect-value';
+	import { dev } from '$app/environment';
 
 	interface FirehoseMessage {
 		id: string;
@@ -89,7 +90,7 @@
 	});
 
 	function connectToServer() {
-		socket = io('http://localhost:3000');
+		socket = io(dev ? 'http://localhost:3000' : undefined);
 
 		socket.on('connect', () => {
 			console.log('Connected to server');

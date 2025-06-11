@@ -1,5 +1,6 @@
 services:
   rabbitmq:
+    # RABBITMQ_URL=amqp://admin:admin@localhost:5672/
     image: rabbitmq:4-management
     restart: "no"
     ports:
@@ -15,6 +16,28 @@ services:
       - ./docker/startup-rabbitmq.sh:/usr/local/bin/startup-rabbitmq.sh:ro
       - rabbitmq_data:/var/lib/rabbitmq
     command: ["/bin/bash", "/usr/local/bin/startup-rabbitmq.sh"]
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  rabbitmq-monitor:
+    build: .
+    container_name: rabbitmq-firehose-monitor
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672/
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
   rabbitmq_data:
