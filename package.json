@@ -4,8 +4,8 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently \"vite dev\" \"bun run src/server/hono.ts\"",
-		"build": "vite build",
+		"dev": "concurrently \"vite dev\" \"bun run --hot src/server/hono.ts\"",
+		"build": "bun build.ts",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -37,10 +37,12 @@
 	"dependencies": {
 		"@hono/node-server": "^1.14.4",
 		"@types/amqplib": "^0.10.7",
+		"@types/bun": "^1.2.15",
 		"amqplib": "^0.10.8",
 		"boxen": "^8.0.1",
 		"hono": "^4.7.11",
 		"socket.io": "^4.8.1",
+		"socket.io-client": "^4.8.1",
 		"svelte-inspect-value": "^0.8.0",
 		"zod": "^3.25.61"
 	}

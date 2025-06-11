@@ -101,17 +101,6 @@ export class RabbitMQFirehoseMonitor {
 			});
 
 			this.isMonitoring = true;
-
-			// Set up graceful shutdown
-			process.on('SIGINT', () => {
-				console.log('\n🛑 Shutting down monitor...');
-				this.stop();
-			});
-
-			process.on('SIGTERM', () => {
-				console.log('\n🛑 Shutting down monitor...');
-				this.stop();
-			});
 		} catch (error) {
 			throw new Error(`Failed to start monitoring: ${error}`);
 		}
@@ -217,6 +206,14 @@ export class RabbitMQFirehoseMonitor {
 		}
 
 		console.log('✅ Monitor stopped.');
+		// Don't call process.exit(0) when used as a library - only for CLI usage
+	}
+
+	/**
+	 * Stop monitoring and exit process (for CLI usage)
+	 */
+	async stopAndExit(): Promise<void> {
+		await this.stop();
 		process.exit(0);
 	}
 

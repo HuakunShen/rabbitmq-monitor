@@ -62,6 +62,17 @@ const main = defineCommand({
 			console.log(`Connection: ${connectionUrl}`);
 			console.log('');
 
+			// Set up graceful shutdown handlers for CLI
+			process.on('SIGINT', async () => {
+				console.log('\n🛑 Shutting down monitor...');
+				await monitor.stopAndExit();
+			});
+
+			process.on('SIGTERM', async () => {
+				console.log('\n🛑 Shutting down monitor...');
+				await monitor.stopAndExit();
+			});
+
 			await monitor.connect();
 
 			// Determine what to monitor based on arguments
