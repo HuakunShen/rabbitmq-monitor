@@ -16,6 +16,9 @@ A real-time web-based visualizer for monitoring RabbitMQ message flows using the
 - 🎨 **JSON Visualization**: Beautiful syntax-highlighted JSON display
 - 🐳 **Docker Ready**: Easy deployment with Docker and Docker Compose
 
+<img width="960" alt="image" src="https://github.com/user-attachments/assets/ca6dab47-fcbf-4976-bea6-907f4abb1a48" />
+
+
 ## 🚀 Quick Start with Docker
 
 ### Quick Deployment
